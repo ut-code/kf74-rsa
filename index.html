@@ -1,13 +1,29 @@
-<!doctype html>
-<html lang="en">
-  <head>
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <title>RSA暗号</title>
+    <link rel="stylesheet" href="/src/style.css" />
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + TS</title>
-  </head>
-  <body>
-    <div id="app"></div>
-    <script type="module" src="/src/main.ts"></script>
-  </body>
+</head>
+<body>
+    <input type="text" id="inputText" placeholder="暗号化したい文章を入力してください"><br>
+
+    <button onclick="encodeText()" id = "button">エンコード</button>
+    <div id="encodedOutput" class = "result"></div>
+    
+    <button onclick="encryptText()" id = "button">暗号化</button><br>
+    e = 13, n = 2987を用いて暗号化します
+    <div id = "encryptCalc">...</div>
+    <div id="encryptedOutput" class = "result"></div> 
+
+    <button onclick="decryptText()" id = "button">復号</button><br>
+    d = 2197, n = 2987を用いて復号します
+    <div id = "decryptCalc">...</div>
+    <div id="decryptedOutput" class = "result"></div>
+
+    <button onclick="decodeText()" id = "button">デコード</button>
+    <div id="decodedOutput" class = "result"></div>
+
+    <script src="/src/script.ts"></script>
+</body>
 </html>
