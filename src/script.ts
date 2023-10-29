@@ -2,6 +2,17 @@ const e = 13;
 const d = 2197;
 const n = 2987;
 
+export function setup() {
+    const encodeButton = document.getElementById("encodeButton")!;
+    encodeButton.addEventListener("click", encodeText);
+    const encryptBUtton = document.getElementById("encryptButton")!;
+    encryptBUtton.addEventListener("click", encryptText);
+    const decryptButton = document.getElementById("decryptButton")!;
+    decryptButton.addEventListener("click", decryptText);
+    const decodeButton = document.getElementById("decodeButton")!;
+    decodeButton.addEventListener("click", decodeText);
+}
+
 function modExp(base: number, exp: number, mod: number) {
     if (mod === 1) return 0;
     let result = 1;

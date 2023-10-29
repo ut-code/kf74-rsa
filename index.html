@@ -2,28 +2,28 @@
 <html lang="ja">
 <head>
     <title>RSA暗号</title>
-    <link rel="stylesheet" href="/src/style.css" />
     <meta charset="UTF-8" />
+    <link rel="stylesheet" href="/src/style.css" />
 </head>
 <body>
     <input type="text" id="inputText" placeholder="暗号化したい文章を入力してください"><br>
 
-    <button onclick="encodeText()" id = "button">エンコード</button>
+    <button id="encodeButton">エンコード</button>
     <div id="encodedOutput" class = "result"></div>
     
-    <button onclick="encryptText()" id = "button">暗号化</button><br>
+    <button id="encryptButton">暗号化</button><br>
     e = 13, n = 2987を用いて暗号化します
     <div id = "encryptCalc">...</div>
     <div id="encryptedOutput" class = "result"></div> 
 
-    <button onclick="decryptText()" id = "button">復号</button><br>
+    <button id="decryptButton">復号</button><br>
     d = 2197, n = 2987を用いて復号します
     <div id = "decryptCalc">...</div>
     <div id="decryptedOutput" class = "result"></div>
 
-    <button onclick="decodeText()" id = "button">デコード</button>
+    <button id="decodeButton">デコード</button>
     <div id="decodedOutput" class = "result"></div>
 
-    <script src="/src/script.ts"></script>
+    <script type="module" src="/src/main.ts"></script>
 </body>
 </html>
