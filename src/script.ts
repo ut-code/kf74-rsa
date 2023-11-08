@@ -5,8 +5,8 @@ const n = 2987;
 export function setup() {
     const encodeButton = document.getElementById("encodeButton")!;
     encodeButton.addEventListener("click", encodeText);
-    const encryptBUtton = document.getElementById("encryptButton")!;
-    encryptBUtton.addEventListener("click", encryptText);
+    const encryptButton = document.getElementById("encryptButton")!;
+    encryptButton.addEventListener("click", encryptText);
     const decryptButton = document.getElementById("decryptButton")!;
     decryptButton.addEventListener("click", decryptText);
     const decodeButton = document.getElementById("decodeButton")!;
