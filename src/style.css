@@ -10,7 +10,19 @@ button {
     border-radius: 8px;
     margin-bottom: 1em;
     margin-top: 1em;
-  }
+}
+
+.inputValue {
+    display: inline-block; /* インラインブロック要素として表示 */
+    padding: 10px 15px; /*ボックスを大きくする*/
+    margin-right: 10px; /* 要素間の右側の余白を設定 */
+    border-radius: 3px; /*ボックス角の丸み*/
+    border: 2px solid #ddd; /*枠線*/
+    box-sizing: border-box; /*横幅の解釈をpadding, borderまでとする*/
+    margin-bottom: 1em;
+    margin-top: 1em;
+}
+  
 
 #inputText{
     width: 100%; /*親要素いっぱい広げる*/

@@ -7,24 +7,37 @@
 </head>
 <body>
     <h1>暗号化と復号の手順を見てみよう</h1>
+    e = 13, d = 2197, n = 2987を用いて暗号文Mを暗号化・復号するプロセスを見てみます<br>
+    <input id="inputM" placeholder="M" class="inputValue"><br>
+    <button id="encryptMButton">暗号化</button><br>
+    暗号文CはMのe乗をnで割った余りです
+    <div id="encryptedM">C = </div>
+    <button id="decryptMButton">復号</button><br>
+    暗号文CはMのd乗をnで割った余りです
+    <div id="decryptedM">M' = </div>
+    <h1>鍵を作ってみよう</h1>
+
     <h1>実際に使ってみよう</h1>
+    <input id = "inputE" placeholder="e" class = "inputValue">
+    <input id = "inputD" placeholder="d" class = "inputValue">
+    <input id = "inputN" placeholder="n" class = "inputValue">
     <input type="text" id="inputText" placeholder="暗号化したい文章を入力してください"><br>
 
     <button id="encodeButton">エンコード</button>
-    <div id="encodedOutput" class = "result"></div>
+    <div id="encodedOutput" class="result"></div>
     
     <button id="encryptButton">暗号化</button><br>
-    e = 13, n = 2987を用いて暗号化します
+    <div id = "encryptExplain"></div>
     <div id = "encryptCalc">...</div>
-    <div id="encryptedOutput" class = "result"></div> 
+    <div id="encryptedOutput" class="result"></div> 
 
     <button id="decryptButton">復号</button><br>
-    d = 2197, n = 2987を用いて復号します
+    <div id = "decryptExplain"></div>
     <div id = "decryptCalc">...</div>
-    <div id="decryptedOutput" class = "result"></div>
+    <div id="decryptedOutput" class="result"></div>
 
     <button id="decodeButton">デコード</button>
-    <div id="decodedOutput" class = "result"></div>
+    <div id="decodedOutput" class="result"></div>
 
     <script type="module" src="/src/main.ts"></script>
 </body>
