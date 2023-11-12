@@ -3,14 +3,18 @@ export default class RSA {
     d: number;
     n: number;
     encryptedM: number;
+    encodedValues: number[];
     encryptedValues: number[];
+    decryptedValues: number[];
 
     constructor(e :number, d: number, n: number) {
         this.e = e;
         this.d = d;
         this.n = n;
         this.encryptedM = 0;
+        this.encodedValues = [];
         this.encryptedValues = [];
+        this.decryptedValues = [];
         this.setup();
     }
 
@@ -74,7 +78,6 @@ export default class RSA {
         decryptedM.textContent = `M' = ${this.decrypt(this.encryptedM)}`;
     }
 
-
     encodeText() {
         const encryptExplain = document.getElementById("encryptExplain")!;
         const decryptExplain = document.getElementById("decryptExplain")!;
@@ -100,46 +103,46 @@ export default class RSA {
         const encodedOutput = document.getElementById("encodedOutput")!;
         encodedOutput.textContent = encodedText + "";
         encryptExplain.textContent = `e = ${this.e}, n = ${this.n}を用いて暗号化します`; 
-        decryptExplain.textContent = `d = ${this.d}, n = ${this.n}を用いて復号します`; 
-        return encodedText;
+        decryptExplain.textContent = `d = ${this.d}, n = ${this.n}を用いて復号します`;
+        this.encodedValues = Array.from(encodedText);
+        // return encodedText;
     }
 
     encryptText() {
-        const encodedText = this.encodeText()!;
+        // const encodedText = this.encodeText()!;
         const encryptedOutput = document.getElementById("encryptedOutput")!;
         const encryptCalc = document.getElementById("encryptCalc")!;
 
-        for (let i = 0; i < encodedText.length; i++) {
-            const charCode = encodedText[i];
+        for (let i = 0; i < this.encodedValues.length; i++) {
+            const charCode = this.encodedValues[i];
             const encryptedCharCode = this.encrypt(charCode);
             this.encryptedValues.push(encryptedCharCode); // Change 'ciphertext' to 'encryptedText'
         }
         
-        encryptCalc.textContent = `例えば${encodedText[0]}の${this.e}乗を${this.n}で割った余りは${this.encryptedValues[0]}です`;
+        encryptCalc.textContent = `例えば${this.encodedValues[0]}の${this.e}乗を${this.n}で割った余りは${this.encryptedValues[0]}です`;
         encryptedOutput.textContent = this.encryptedValues.join(",");
     }
 
     decryptText() {
         const decryptedOutput = document.getElementById("decryptedOutput")!;
         const decryptCalc = document.getElementById("decryptCalc")!;
-        let decryptedText: number[] = [];
+        // let decryptedText: number[] = [];
 
         for (let i = 0; i < this.encryptedValues.length; i++) {
             const encryptedCharCode = this.encryptedValues[i];
             const decryptedCharCode = this.decrypt(encryptedCharCode);
-            decryptedText.push(decryptedCharCode);
+            this.decryptedValues.push(decryptedCharCode);
         }
 
-        decryptCalc.textContent = `例えば${this.encryptedValues[0]}の${this.d}乗を${this.n}で割った余りは${decryptedText[0]}です`;
-        decryptedOutput.textContent = decryptedText.join(",");
-        return decryptedText;
+        decryptCalc.textContent = `例えば${this.encryptedValues[0]}の${this.d}乗を${this.n}で割った余りは${this.decryptedValues[0]}です`;
+        decryptedOutput.textContent = this.decryptedValues.join(",");;
     }
 
     decodeText() {
         const decoder = new TextDecoder();
-        const decryptedText = this.decryptText(); // Assuming this returns an array of decrypted values
+        // const decryptedText = this.decryptText(); // Assuming this returns an array of decrypted values
         //const decodedText = decoder.decode(new Uint8Array(decryptedText));
-        const decodedText = decoder.decode(new Uint8Array(decryptedText));
+        const decodedText = decoder.decode(new Uint8Array(this.decryptedValues));
         const decodedOutput = document.getElementById("decodedOutput")!
         decodedOutput.textContent = decodedText;
     }
