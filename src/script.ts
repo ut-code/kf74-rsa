@@ -23,6 +23,14 @@ export default class RSA {
         encryptMButton.addEventListener("click", this.encryptM.bind(this));
         const decryptMButton = document.getElementById("decryptMButton")!;
         decryptMButton.addEventListener("click", this.decryptM.bind(this));
+        const suggestPrimeButton = document.getElementById("suggestPrime")!;
+        suggestPrimeButton.addEventListener("click", RSA.suggestPrime);
+        const calculateNButton = document.getElementById("calculateN")!;
+        calculateNButton.addEventListener("click", RSA.calculateN);
+        const suggestEbutton = document.getElementById("suggestE")!;
+        suggestEbutton.addEventListener("click", RSA.suggestE);
+        const calculateDbutton = document.getElementById("calculateD")!;
+        calculateDbutton.addEventListener("click", RSA.calculateD);
         const encodeButton = document.getElementById("encodeButton")!;
         encodeButton.addEventListener("click", this.encodeText.bind(this));
         const encryptButton = document.getElementById("encryptButton")!;
@@ -76,7 +84,140 @@ export default class RSA {
     decryptM(){
         const decryptedM = document.getElementById("decryptedM")!;
         decryptedM.textContent = `M' = ${this.decrypt(this.encryptedM)}`;
+    }    
+
+    static isPrime(num: number): boolean {
+        for (let i = 2; i <= Math.sqrt(num); i++) {
+            if (num % i === 0) {
+                return false;
+            }
+        }
+        return num > 1;
     }
+    
+    static findNextPrime(startingNumber: number): number {
+        let currentNumber = startingNumber;
+    
+        while (true) {
+            if (RSA.isPrime(currentNumber)) {
+                return currentNumber;
+            }
+            currentNumber++;
+        }
+    }
+    
+    static isValidNumber(value: string): boolean {
+        const regex = /^[0-9]{3,4}$/;
+        return regex.test(value);
+    }
+    
+    static suggestPrime(): void {
+        const inputA = document.getElementById("inputA") as HTMLInputElement;
+        const inputB = document.getElementById("inputB") as HTMLInputElement;
+        const primesElement = document.getElementById("primes");
+    
+        if (!inputA || !inputB || !RSA.isValidNumber(inputA.value) || !RSA.isValidNumber(inputB.value)) {
+            alert("a, bには3桁か4桁の半角数字を入力してください。");
+            return;
+        }
+    
+        primesElement!.textContent = `p = ${RSA.findNextPrime(parseInt(inputA.value))}, q = ${RSA.findNextPrime(parseInt(inputB.value))}`;
+    }
+    
+    static calculateN(): void {
+        const inputA = document.getElementById("inputA") as HTMLInputElement;
+        const inputB = document.getElementById("inputB") as HTMLInputElement;
+    
+        const n = RSA.findNextPrime(parseInt(inputA.value)) * RSA.findNextPrime(parseInt(inputB.value));
+        const phiN = (RSA.findNextPrime(parseInt(inputA.value)) - 1) * (RSA.findNextPrime(parseInt(inputB.value)) - 1);
+    
+        const nTextElement = document.getElementById("nText");
+        const phiNTextElement = document.getElementById("phiNText");
+    
+        if (nTextElement && phiNTextElement) {
+            nTextElement.textContent = `n = ${n}`;
+            phiNTextElement.textContent = `φ(n) = ${phiN}`;
+        }
+    }
+    
+    static findSmallPrimes(phiN: number): number[] {
+        const smallPrimes: number[] = [];
+    
+        for (let e = 2; e < phiN; e++) {
+            if (RSA.isPrime(e) && phiN % e !== 0) {
+                smallPrimes.push(e);
+    
+                if (smallPrimes.length === 3) {
+                    break;
+                }
+            }
+        }
+    
+        return smallPrimes;
+    }
+    
+    static suggestE(): void {
+        const inputA = document.getElementById("inputA") as HTMLInputElement;
+        const inputB = document.getElementById("inputB") as HTMLInputElement;
+        const phiN = (RSA.findNextPrime(parseInt(inputA.value)) - 1) * (RSA.findNextPrime(parseInt(inputB.value)) - 1);
+        const suggestedE = document.getElementById("suggestedE");
+        const smallPrimes = RSA.findSmallPrimes(phiN);
+        if (suggestedE) {
+            suggestedE.textContent = `e = ${smallPrimes[0]}, ${smallPrimes[1]}, ${smallPrimes[2]}`;
+        }
+    }
+    
+    static modInverse(e: number, phiN: number): number | null {
+        let d = 0;
+        let x1 = 0;
+        let x2 = 1;
+        let y1 = 1;
+        let tempPhiN = phiN;
+    
+        while (e > 0) {
+            let temp1 = Math.floor(tempPhiN / e);
+            let temp2 = tempPhiN - temp1 * e;
+            tempPhiN = e;
+            e = temp2;
+    
+            let x = x2 - temp1 * x1;
+            let y = d - temp1 * y1;
+    
+            x2 = x1;
+            x1 = x;
+            d = y1;
+            y1 = y;
+        }
+    
+        if (tempPhiN === 1) {
+            return (d + phiN) % phiN;
+        }
+    
+        return null;
+    }
+    
+    static calculateD(): void {
+        const inputA = document.getElementById("inputA") as HTMLInputElement;
+        const inputB = document.getElementById("inputB") as HTMLInputElement;
+        const phiN = (RSA.findNextPrime(parseInt(inputA.value)) - 1) * (RSA.findNextPrime(parseInt(inputB.value)) - 1);
+        const smallPrimes = RSA.findSmallPrimes(phiN);
+        const calculatedD = document.getElementById("calculatedD");
+        const dArray: number[] = [];
+    
+        for (let i = 0; i < smallPrimes.length; i++) {
+            const e = smallPrimes[i];
+            const d = RSA.modInverse(e, phiN);
+    
+            if (d !== null) {
+                dArray.push(d);
+            }
+        }
+    
+        if (calculatedD) {
+            calculatedD.textContent = `d = ${dArray[0]},${dArray[1]},${dArray[2]}`;
+        }
+    }
+    
 
     encodeText() {
         const encryptExplain = document.getElementById("encryptExplain")!;
