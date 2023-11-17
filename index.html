@@ -15,8 +15,28 @@
     <button id="decryptMButton">復号</button><br>
     暗号文CはMのd乗をnで割った余りです
     <div id="decryptedM">M' = </div>
-    <h1>鍵を作ってみよう</h1>
 
+    <h1>鍵を作ってみよう</h1>
+    3~4桁の半角数字を入力してください<br>
+    <input id = "inputA" placeholder="a">
+    <input id = "inputB" placeholder="b"><br>
+    
+    <button id = "suggestPrime">p, q</button>
+    p[resp. q]はa[resp. b]以上で最小の素数です<br>
+    <div id = "primes">p = , q = </div>
+
+    <button id = "calculateN">n, φ(n)</button>
+    <div id = "nText">n = </div>
+    <div id = "phiNText">φ(n) = </div>
+     
+    <button id = "suggestE">e</button>
+    適当なeを提案します、ここではφ(n)の約数ではない素数を小さい順に3つ挙げます<br>
+    <div id = "suggestedE">e = </div>
+
+    <button id = "calculateD">d</button>
+    edはφ(n)を法として1と等しいです<br>
+    <div id = "calculatedD">d = </div>
+    
     <h1>実際に使ってみよう</h1>
     <input id = "inputE" placeholder="e" class = "inputValue">
     <input id = "inputD" placeholder="d" class = "inputValue">
