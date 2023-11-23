@@ -2,15 +2,19 @@ export default class RSA {
     e: number;
     d: number;
     n: number;
+    p: number;
+    q: number;
     encryptedM: number;
     encodedValues: number[];
     encryptedValues: number[];
     decryptedValues: number[];
 
-    constructor(e :number, d: number, n: number) {
+    constructor(e :number, d: number, n: number, p: number, q: number) {
         this.e = e;
         this.d = d;
         this.n = n;
+        this.p = p;
+        this.q = q;
         this.encryptedM = 0;
         this.encodedValues = [];
         this.encryptedValues = [];
@@ -76,7 +80,7 @@ export default class RSA {
     }
 
     static isValidNumber(value: string): boolean {
-        const regex = /^[0-9]{3,4}$/;
+        const regex = /^[0-9]+/;
         return regex.test(value);
     }
 
@@ -134,6 +138,11 @@ export default class RSA {
     }
 
     encryptM() {
+        this.e = 13;
+        this.d = 2197;
+        this.n = 2987;
+        this.p = 29;
+        this.q = 103;
         const inputM = (<HTMLInputElement>document.getElementById("inputM")!).value;
         const encryptedM = document.getElementById("encryptedM")!;
         const isNumeric = /^[0-9]+$/.test(inputM);
@@ -154,8 +163,7 @@ export default class RSA {
     decryptM(){
         const decryptedM = document.getElementById("decryptedM")!;
         decryptedM.textContent = `M' = ${this.decrypt(this.encryptedM)}`;
-    }    
-
+    }
     
     suggestPrime(){
         const inputA = document.getElementById("inputA") as HTMLInputElement;
@@ -163,19 +171,28 @@ export default class RSA {
         const primesElement = document.getElementById("primes");
     
         if (!inputA || !inputB || !RSA.isValidNumber(inputA.value) || !RSA.isValidNumber(inputB.value)) {
-            alert("a, bには3桁か4桁の半角数字を入力してください。");
+            alert("a, bには半角数字を入力してください。");
             return;
         }
+        const A = parseInt(inputA.value);
+        const B = parseInt(inputB.value);
+        if (A < 256 || B < 256 || A > 9999 || B > 9999) {
+            alert("a, bには256以上9999以下の自然数を入力してください。");
+            return;
+        }
+
+        const p = RSA.findNextPrime(A);
+        const q_candidate = RSA.findNextPrime(B);
+        const q = p === q_candidate ? RSA.findNextPrime(q_candidate + 1) : q_candidate;
     
-        primesElement!.textContent = `p = ${RSA.findNextPrime(parseInt(inputA.value))}, q = ${RSA.findNextPrime(parseInt(inputB.value))}`;
+        this.p = p;
+        this.q = q;
+        primesElement!.textContent = `p = ${p}, q = ${q}`;
     }
     
     calculateN(){
-        const inputA = document.getElementById("inputA") as HTMLInputElement;
-        const inputB = document.getElementById("inputB") as HTMLInputElement;
-    
-        const n = RSA.findNextPrime(parseInt(inputA.value)) * RSA.findNextPrime(parseInt(inputB.value));
-        const phiN = (RSA.findNextPrime(parseInt(inputA.value)) - 1) * (RSA.findNextPrime(parseInt(inputB.value)) - 1);
+        const n = this.p * this.q;
+        const phiN = (this.p - 1) * (this.q - 1);
     
         const nTextElement = document.getElementById("nText");
         const phiNTextElement = document.getElementById("phiNText");
@@ -186,11 +203,8 @@ export default class RSA {
         }
     }
     
-
     suggestE(){
-        const inputA = document.getElementById("inputA") as HTMLInputElement;
-        const inputB = document.getElementById("inputB") as HTMLInputElement;
-        const phiN = (RSA.findNextPrime(parseInt(inputA.value)) - 1) * (RSA.findNextPrime(parseInt(inputB.value)) - 1);
+        const phiN = (this.p - 1) * (this.q - 1);
         const suggestedE = document.getElementById("suggestedE");
         const smallPrimes = RSA.findSmallPrimes(phiN);
         if (suggestedE) {
@@ -199,9 +213,7 @@ export default class RSA {
     }
     
     calculateD(){
-        const inputA = document.getElementById("inputA") as HTMLInputElement;
-        const inputB = document.getElementById("inputB") as HTMLInputElement;
-        const phiN = (RSA.findNextPrime(parseInt(inputA.value)) - 1) * (RSA.findNextPrime(parseInt(inputB.value)) - 1);
+        const phiN = (this.p - 1) * (this.q - 1);
         const smallPrimes = RSA.findSmallPrimes(phiN);
         const calculatedD = document.getElementById("calculatedD");
         const dArray: number[] = [];
@@ -218,9 +230,7 @@ export default class RSA {
         if (calculatedD) {
             calculatedD.textContent = `d = ${dArray[0]}`;
         }
-
     }
-
 
     encodeText() {
         const encryptExplain = document.getElementById("encryptExplain")!;
@@ -233,8 +243,8 @@ export default class RSA {
         const isNumeric = /^[0-9]+$/.test(inputE) && /^[0-9]+$/.test(inputD) && /^[0-9]+$/.test(inputN);
 
         if (!isNumeric) {
-                alert("e, d, nには半角数字を入力してください。");
-                return; // 数値でない場合は処理を中断
+            alert("e, d, nには半角数字を入力してください。");
+            return; // 数値でない場合は処理を中断
         }
         this.e = Number(inputE);
         this.d = Number(inputD);
@@ -254,6 +264,7 @@ export default class RSA {
 
     encryptText() {
         // const encodedText = this.encodeText()!;
+        this.encryptedValues = [];
         const encryptedOutput = document.getElementById("encryptedOutput")!;
         const encryptCalc = document.getElementById("encryptCalc")!;
 
@@ -268,6 +279,7 @@ export default class RSA {
     }
 
     decryptText() {
+        this.decryptedValues = [];
         const decryptedOutput = document.getElementById("decryptedOutput")!;
         const decryptCalc = document.getElementById("decryptCalc")!;
         // let decryptedText: number[] = [];
