@@ -7,40 +7,40 @@
 </head>
 <body>
     <h1>1.暗号化と復号の手順を見てみよう</h1>
-    e = 13, d = 2197, n = 2987を用いて暗号文Mを暗号化・復号するプロセスを見てみます<br>
-    Mにn未満の好きな数字を半角で入力してください<br>
+    まずはe = 13, d = 2197, n = 2987を用いて暗号文Mを暗号化・復号するプロセスを見てみます。<br>
+    Mにn未満の好きな数字（自然数）を半角で入力してください。<br>
     <input id="inputM" placeholder="M" class="inputValue"><br>
     <button id="encryptMButton">暗号化</button><br>
-    暗号文CはMのe乗をnで割った余りです
+    暗号文CはMのe乗をnで割った余りです。
     <div id="encryptedM">C = </div>
     <button id="decryptMButton">復号</button><br>
-    復号文M'はCのd乗をnで割った余りです、平文Mと一致するはずです
+    復号文M'はCのd乗をnで割った余りです、平文Mと一致するはずです。
     <div id="decryptedM">M' = </div>
 
     <h1>2.鍵を作ってみよう</h1>
-    a,bに3~4桁の半角数字を入力してください<br>
+    a, bに3~4桁の好きな数字（自然数）を半角で入力してください。<br>
     <input id = "inputA" placeholder="a" class = "inputValue">
     <input id = "inputB" placeholder="b" class = "inputValue"><br>
     
-    <button id = "suggestPrime">p, q</button><br>
-    pはa以上で最小の素数です、q, bについても同様です<br>
+    <button id = "suggestPrime">p, qを計算</button><br>
+    pはa以上で最小の素数です、q, bについても同様です。<br>
     <div id = "primes">p = , q = </div>
 
-    <button id = "calculateN">n, φ(n)</button><br>
-    n = p × q, φ(n) = (p - 1) × (q - 1)です
+    <button id = "calculateN">n, φ(n)を計算</button><br>
+    n = p × q, φ(n) = (p - 1) × (q - 1)です。
     <div id = "nText">n = </div>
     <div id = "phiNText">φ(n) = </div>
      
-    <button id = "suggestE">e</button><br>
-    適当なeを提案します、ここではφ(n)の約数ではない素数のうちもっとも小さいものとします<br>
+    <button id = "suggestE">eを計算</button><br>
+    適当なeを提案します。ここではφ(n)の約数ではない素数のうちもっとも小さいものとします。<br>
     <div id = "suggestedE">e = </div>
 
-    <button id = "calculateD">d</button><br>
-    e × dをφ(n)で割った余りは1になります<br>
+    <button id = "calculateD">dを計算</button><br>
+    e × dをφ(n)で割った余りは1になります。<br>
     <div id = "calculatedD">d = </div>
 
     <h1>3.実際に使ってみよう</h1>
-    2.で分かったe, d, nを入力してください<br>
+    2.で分かったe, d, nを入力してください。それ以外の値だと、奇跡的に条件を満たさない限り正しく復号されません。<br>
     <input id = "inputE" placeholder="e" class = "inputValue">
     <input id = "inputD" placeholder="d" class = "inputValue">
     <input id = "inputN" placeholder="n" class = "inputValue">
