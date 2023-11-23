@@ -194,7 +194,7 @@ export default class RSA {
         const suggestedE = document.getElementById("suggestedE");
         const smallPrimes = RSA.findSmallPrimes(phiN);
         if (suggestedE) {
-            suggestedE.textContent = `e = ${smallPrimes[0]}, ${smallPrimes[1]}, ${smallPrimes[2]}`;
+            suggestedE.textContent = `e = ${smallPrimes[0]}`;
         }
     }
     
@@ -216,7 +216,7 @@ export default class RSA {
         }
     
         if (calculatedD) {
-            calculatedD.textContent = `d = ${dArray[0]},${dArray[1]},${dArray[2]}`;
+            calculatedD.textContent = `d = ${dArray[0]}}`;
         }
 
     }
