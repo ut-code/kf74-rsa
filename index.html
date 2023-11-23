@@ -8,13 +8,13 @@
 <body>
     <h1>1.暗号化と復号の手順を見てみよう</h1>
     e = 13, d = 2197, n = 2987を用いて暗号文Mを暗号化・復号するプロセスを見てみます<br>
-    Mに好きな数字を半角で入力してください<br>
+    Mにn未満の好きな数字を半角で入力してください<br>
     <input id="inputM" placeholder="M" class="inputValue"><br>
     <button id="encryptMButton">暗号化</button><br>
     暗号文CはMのe乗をnで割った余りです
     <div id="encryptedM">C = </div>
     <button id="decryptMButton">復号</button><br>
-    復号文M'はCのd乗をnで割った余りです
+    復号文M'はCのd乗をnで割った余りです、平文Mと一致するはずです
     <div id="decryptedM">M' = </div>
 
     <h1>2.鍵を作ってみよう</h1>
