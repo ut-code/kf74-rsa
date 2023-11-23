@@ -204,26 +204,19 @@ export default class RSA {
         const phiN = (RSA.findNextPrime(parseInt(inputA.value)) - 1) * (RSA.findNextPrime(parseInt(inputB.value)) - 1);
         const smallPrimes = RSA.findSmallPrimes(phiN);
         const calculatedD = document.getElementById("calculatedD");
-        const keysEDN = document.getElementById("keys");
-        const eArray: number[] = [];
         const dArray: number[] = [];
-        const n = RSA.findNextPrime(parseInt(inputA.value)) * RSA.findNextPrime(parseInt(inputB.value));
     
         for (let i = 0; i < smallPrimes.length; i++) {
             const e = smallPrimes[i];
             const d = RSA.modInverse(e, phiN);
     
             if (d !== null) {
-                eArray.push(e);
                 dArray.push(d);
             }
         }
     
         if (calculatedD) {
             calculatedD.textContent = `d = ${dArray[0]},${dArray[1]},${dArray[2]}`;
-            keysEDN.textContent = `(e,d,n) = (${eArray[0]},${dArray[0]},${n}), 
-                                          (${eArray[1]},${dArray[1]},${n}), 
-                                          (${eArray[2]},${dArray[2]},${n})`
         }
 
     }
