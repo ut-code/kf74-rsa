@@ -8,6 +8,7 @@
 <body>
     <h1>1.暗号化と復号の手順を見てみよう</h1>
     e = 13, d = 2197, n = 2987を用いて暗号文Mを暗号化・復号するプロセスを見てみます<br>
+    Mに好きな数字を半角で入力してください<br>
     <input id="inputM" placeholder="M" class="inputValue"><br>
     <button id="encryptMButton">暗号化</button><br>
     暗号文CはMのe乗をnで割った余りです
@@ -17,7 +18,7 @@
     <div id="decryptedM">M' = </div>
 
     <h1>2.鍵を作ってみよう</h1>
-    3~4桁の半角数字を入力してください<br>
+    a,bに3~4桁の半角数字を入力してください<br>
     <input id = "inputA" placeholder="a" class = "inputValue">
     <input id = "inputB" placeholder="b" class = "inputValue"><br>
     
@@ -35,10 +36,12 @@
     <div id = "suggestedE">e = </div>
 
     <button id = "calculateD">d</button><br>
-    edはφ(n)を法として1と等しいです<br>
+    e * dはφ(n)を法として1と等しいです<br>
+    eとdは順に対応しています<br>
     <div id = "calculatedD">d = </div>
 
     <h1>3.実際に使ってみよう</h1>
+    2.で分かったe, ,d, nを入力してください<br>
     <input id = "inputE" placeholder="e" class = "inputValue">
     <input id = "inputD" placeholder="d" class = "inputValue">
     <input id = "inputN" placeholder="n" class = "inputValue">
