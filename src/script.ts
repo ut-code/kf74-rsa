@@ -216,7 +216,7 @@ export default class RSA {
         }
     
         if (calculatedD) {
-            calculatedD.textContent = `d = ${dArray[0]}}`;
+            calculatedD.textContent = `d = ${dArray[0]}`;
         }
 
     }
